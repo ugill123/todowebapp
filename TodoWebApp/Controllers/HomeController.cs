@@ -35,9 +35,9 @@ namespace TodoWebApp.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> AddTodo(Todo todo)
-        {
-            Todo? receivedTodo = new();
-            using (var httpClient = new HttpClient())
+        { Todo? receivedTodo = new();
+            if(ModelState.IsValid){
+                using (var httpClient = new HttpClient())
             {
                 String test = todo.Id.ToString();
                 StringContent content = new(JsonConvert.SerializeObject(todo), Encoding.UTF8, "application/json");
@@ -47,8 +47,16 @@ namespace TodoWebApp.Controllers
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 receivedTodo = JsonConvert.DeserializeObject<Todo>(apiResponse);
             }
-            
             return RedirectToAction("Index");
+            
+
+            }
+            return View(todo);
+            
+           
+            
+            
+            
         }
         // update  methods 
         public async Task<IActionResult> UpdateTodo(int id)
@@ -68,6 +76,7 @@ namespace TodoWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateTodo(Todo todo)
         {
+            
             Todo receivedTodo = new Todo();
             var httpClient = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Put, $"http://localhost:5142/api/Tasks/{todo.Id}")

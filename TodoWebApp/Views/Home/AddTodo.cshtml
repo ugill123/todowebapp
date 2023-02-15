@@ -4,18 +4,23 @@
 }
 
 <h2>Add a Todo <a asp-action="Index" class="btn btn-sm btn-secondary">Back</a></h2>
+
 <form asp-action="AddTodo" method="post">
+    
     <div class="form-group">
         <label for="Id">id:</label>
-        <input class="form-control" name="Id" />
+        <input class="form-control" name="Id"/>
+        @Html.ValidationMessageFor(model => model.Id)
     </div>
     <div class="form-group">
         <label for="Name">name:</label>
         <input class="form-control" name="Name" />
+        @Html.ValidationMessageFor(model => model.Name)
     </div>
     <div class="form-group">
         <label for="Iscompleted">is Completed:</label>
         <input class="form-control" name="Iscompleted" />
+        @Html.ValidationMessageFor(model => model.Iscompleted)
     </div>
     <div class="text-center panel-body">
         <button type="submit" class="btn btn-sm btn-primary">Add</button>
